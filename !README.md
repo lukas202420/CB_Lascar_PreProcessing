@@ -1,5 +1,5 @@
 ### CB_Lascar_PreProcessing
-A repository for Lascar .csv file processing scripts that can be used to plot and clean up temperature, relative humidity, and dew point temperature data before uploading them to the webpage (to come...).
+A repository for Lascar .csv file processing scripts that can be used to clean n' plot temperature, relative humidity, and dew point temperature data before uploading them to the webpage (to come...).
 
 ### Folders
 'up2date' is where all the most recent scripts can be found and when they were last updated.
