@@ -4,4 +4,3 @@ A repository for Lascar .csv file processing scripts that can be used to plot an
 ### Folders
 'up2date' is where all the most recent scripts can be found and when they were last updated.
 'not2date' is where all older versions of the script exists and when they were last updated.
-'figures' includes any figures we may have wanted to share.
