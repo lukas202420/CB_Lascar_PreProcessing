@@ -1,2 +1,7 @@
-# CB_Lascar_PreProcessing
-A test repository or Lascar pre-processing that people can use to clean up their data files before uploading them to the webpage.
+### CB_Lascar_PreProcessing
+A repository for Lascar .csv file processing scripts that can be used to plot and clean up temperature, relative humidity, and dew point temperature data before uploading them to the webpage (to come...).
+
+### Folders
+'up2date' is where all the most recent scripts can be found and when they were last updated.
+'not2date' is where all older versions of the script exists and when they were last updated.
+'figures' includes any figures we may have wanted to share.
