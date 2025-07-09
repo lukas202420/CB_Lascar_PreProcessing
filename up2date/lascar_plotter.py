@@ -3,7 +3,7 @@
 Created on Thu Jul  3 16:23:13 2025
 Last update on Wed Jul 9 12:27 2025
 
-@author: timot
+@author: timot & lukas
 """
 
 
