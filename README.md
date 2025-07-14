@@ -6,4 +6,4 @@ A repository for Lascar .csv file processing scripts that can be used to clean n
 - 'not2date' is where all older versions of the script exists and when they were last updated.
 
 ### Wiki
-An instruction manual on how to use the files in up2date:
+An instruction manual on how to use the files in up2date: [[WIKI|Wiki]]
