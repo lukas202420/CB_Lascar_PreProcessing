@@ -125,6 +125,19 @@ dataframe.loc[over_100_rh, rh_name] = 100
 dataframe.loc[over_100_rh, td_name] = dataframe.loc[over_100_rh, temp_name]
 
 
+#%% check if bad year 
+
+dataframe['year'] = dataframe.index.to_period('Y')
+
+# Count number of present data points per year
+actual_counts_yearly = dataframe.groupby('year')['present'].sum()
+
+# Define threshold for valid year (e.g. 360 days of data = 360*24 hourly points = 8640)
+year_min_points = 360 * 24  # Adjust if your data is not hourly
+
+# Filter valid and bad years
+valid_years = actual_counts_yearly[actual_counts_yearly >= year_min_points].index
+bad_years = actual_counts_yearly[actual_counts_yearly < year_min_points].index
 #%% check if valid month
 
 dataframe['month']=dataframe.index.to_period('M')
@@ -481,6 +494,55 @@ def plot_hist_temp():
     plt.grid(True, which='major', axis='y')  
     
     plt.show()
+    
+def plot_line_hist_temp_by_year():
+    plt.figure(figsize=(14, 7))
+    
+    df = dataframe.loc[start_date_window:end_date_window].copy()
+    df['year'] = df.index.year
+    
+    # Get min and max temperature values
+    min_val = int(np.floor(df[temp_name].min()))
+    max_val = int(np.ceil(df[temp_name].max()))
+    bins = np.arange(min_val, max_val + 1)
+    
+    # Plot each year
+    for year, group in df.groupby('year'):
+        hist, _ = np.histogram(group[temp_name], bins=bins)
+        bin_centers = (bins[:-1] + bins[1:]) / 2
+        plt.plot(bin_centers, hist, label=str(year), marker='o')
+    
+    plt.title('Temperature Histogram by Year (Line Plot)')
+    plt.xlabel('Temperature (°C)')
+    plt.ylabel('Frequency')
+    plt.xticks(bins)
+    plt.grid(True, axis='both', linestyle='--', alpha=0.5)
+    plt.legend(title='Year')
+    plt.tight_layout()
+    plt.show()
+
+def plot_line_histogram_per_year():
+    plt.figure(figsize=(12, 6))
+
+    min_val = int(np.floor(dataframe[temp_name].min()))
+    max_val = int(np.ceil(dataframe[temp_name].max()))
+    bins = np.arange(min_val, max_val + 1)
+
+    for year in valid_years:
+        year_df = dataframe[dataframe['year'] == year]
+        hist, _ = np.histogram(year_df[temp_name], bins=bins)
+        plt.plot(bins[:-1], hist, label=str(year), alpha=0.7)
+
+    plt.title('Temperature Distribution by Year (Valid Years Only)')
+    plt.xlabel('Temperature (°C)')
+    plt.ylabel('Occurrences')
+    plt.xticks(bins)
+    plt.grid(True, which='major', axis='both')
+    plt.legend(loc='upper right', frameon=False)
+    plt.tight_layout()
+    plt.show()
+
+
 
 #%% Night vs day temp 
 
@@ -1162,6 +1224,31 @@ def plot_hist_rh():
     
     plt.show()
 
+
+def plot_line_histogram_rh_per_year():
+    plt.figure(figsize=(12, 6))
+
+    rh_min = int(np.floor(dataframe[rh_name].min()))
+    rh_max = int(np.ceil(dataframe[rh_name].max()))
+    bins = np.arange(rh_min, rh_max + 1)
+
+    for year in valid_years:
+        year_df = dataframe[dataframe['year'] == year]
+        hist, _ = np.histogram(year_df[rh_name], bins=bins)
+        plt.plot(bins[:-1], hist, label=str(year), alpha=0.7)
+
+    plt.yscale('log')
+    plt.title('Relative Humidity Distribution by Year (Valid Years Only)')
+    plt.xlabel('Relative Humidity (%)')
+    plt.ylabel('Log Scale Occurrences')
+
+    # Set xticks every 5
+    plt.xticks(np.arange(rh_min, rh_max + 1, 5))
+
+    plt.grid(True, which='major', axis='both')
+    plt.legend(loc='upper right', frameon=False)
+    plt.tight_layout()
+    plt.show()
 
 
 
